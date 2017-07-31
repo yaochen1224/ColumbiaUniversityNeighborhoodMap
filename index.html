@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Neighborhood Map</title>
+	<link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+	<div id="map-canvas"></div>
+	<div id="panel">
+		<div id="searchbox" data-bind="slideVisible: panelVisible">
+			<input id='search' autocomplete="off" placeholder="Search..." data-bind="value: query, valueUpdate: 'keyup'" />
+			<ul id="plist" data-bind="template: { name: 'pitem_template', foreach: places}">
+			</ul>
+			<script type="text/html" id="pitem_template">
+				<a href="#" data-bind="click: $root.navigatePlace">
+					<li class="pitem">
+						<strong id="pitem_title" data-bind="text: title"></strong>
+						<p id="pitem_street_address" data-bind="text: streetAddress"></p>
+						<p id="pitem_city_address" data-bind="text: cityAddress"> </p>
+					</li>
+				</a>
+			</script>
+		</div>
+		<div id="toggleBar" data-bind="click: togglePanel"><img id = "dropDownIcon" data-bind="attr: {src: (panelVisible() ? 'images/up.png' : 'images/down.png')}"></div>
+	</div>
+	<div id="weather-channel" data-bind="slideWeatherChannel: weatherVisible">
+		<img id="weather-icon" src="images/weather.png" data-bind="click: toggleWeather">
+		<div id="weather-info">
+			<strong>New York</strong>
+			<p data-bind="text: weatherInfo"></p>
+		</div>
+	</div>
+	<div id="errorBar" data-bind="fadeVisible: errorMessage">
+		<p data-bind="text: ('Error! ' + errorMessage())"></p>
+	</div>
+	<script src="js/knockout-min.js"></script>
+	<script
+		src="http://code.jquery.com/jquery-3.2.1.min.js"
+		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		crossorigin="anonymous"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/script.js"></script>
+
+	<script async defer onerror="mapError()"
+    	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBA3K3ElK7gHGebEzDfZ1IoQ8MTUdaR1uE&callback=initialize">
+    </script>
+</body>
+</html>
